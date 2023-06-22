@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Item {
+    private String name;
+    private int quantity;
+    private double price;
+
+    public Item(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public double calculateTotal() {
+        return quantity * price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
+
+class Invoice {
+    private String invoiceNumber;
+    private String clientName;
+    private List<Item> items;
+
+    public Invoice(String invoiceNumber, String clientName, List<Item> items) {
+        this.invoiceNumber = invoiceNumber;
+        this.clientName = clientName;
+        this.items = items;
+    }
+
+    public double calculateTotal() {
+        double total = 0;
+        for (Item item : items) {
+            total += item.calculateTotal();
+        }
+        return total;
+    }
+
+    public void generateInvoice() {
+        System.out.println("Invoice Number: " + invoiceNumber);
+        System.out.println("Client Name: " + clientName);
+        System.out.println("Items:");
+        for (Item item : items) {
+            System.out.println("- Item: " + item.getName());
+            System.out.println("  Quantity: " + item.getQuantity());
+            System.out.println("  Price: " + item.getPrice());
+        }
+        System.out.println("Total: " + calculateTotal());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("Item 1", 2, 10.0));
+        items.add(new Item("Item 2", 3, 15.0));
+
+        Invoice invoice = new Invoice("INV001", "Client A", items);
+        invoice.generateInvoice();
+    }
+}
